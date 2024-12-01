@@ -1,63 +1,85 @@
-//QN2. Implement a stack using an array. Write functions to perform push and pop operations.
 #include <stdio.h>
+
 #include <stdlib.h>
 
-#define MAX 100
+#define SIZE 4
 
-typedef struct {
-    int data[MAX];
-    int top;
-} Stack;
+int top = -1, inp_array[SIZE];
+void push();
+void pop();
+void show();
 
-void initStack(Stack *s) {
-    s->top = -1;
-}
+int main()
+{
+    int choice;
 
-int isFull(Stack *s) {
-    return s->top == MAX - 1;
-}
+    while (1)
+    {
+        printf("\nPerform operations on the stack:");
+        printf("\n1.Push the element\n2.Pop the element\n3.Show\n4.End");
+        printf("\n\nEnter the choice: ");
+        scanf("%d", &choice);
 
-int isEmpty(Stack *s) {
-    return s->top == -1;
-}
+        switch (choice)
+        {
+        case 1:
+            push();
+            break;
+        case 2:
+            pop();
+            break;
+        case 3:
+            show();
+            break;
+        case 4:
+            exit(0);
 
-void push(Stack *s, int value) {
-    if (isFull(s)) {
-        printf("Stack overflow\n");
-        return;
+        default:
+            printf("\nInvalid choice!!");
+        }
     }
-    s->data[++(s->top)] = value;
 }
 
-int pop(Stack *s) {
-    if (isEmpty(s)) {
-        printf("Stack underflow\n");
-        return -1;
+void push()
+{
+    int x;
+
+    if (top == SIZE - 1)
+    {
+        printf("\nOverflow!!");
     }
-    return s->data[(s->top)--];
-}
-
-int peek(Stack *s) {
-    if (isEmpty(s)) {
-        printf("Stack is empty\n");
-        return -1;
+    else
+    {
+        printf("\nEnter the element to be added onto the stack: ");
+        scanf("%d", &x);
+        top = top + 1;
+        inp_array[top] = x;
     }
-    return s->data[s->top];
 }
 
-int main() {
-    Stack s;
-    initStack(&s);
+void pop()
+{
+    if (top == -1)
+    {
+        printf("\nUnderflow!!");
+    }
+    else
+    {
+        printf("\nPopped element: %d", inp_array[top]);
+        top = top - 1;
+    }
+}
 
-    push(&s, 10);
-    push(&s, 20);
-    push(&s, 30);
-
-    printf("Top element is %d\n", peek(&s));
-    printf("Popped element is %d\n", pop(&s));
-    printf("Popped element is %d\n", pop(&s));
-    printf("Popped element is %d\n", pop(&s));
-    printf("Popped element is %d\n", pop(&s));
-
-    return 0;
+void show()
+{
+    if (top == -1)
+    {
+        printf("\nUnderflow!!");
+    }
+    else
+    {
+        printf("\nElements present in the stack: \n");
+        for (int i = top; i >= 0; --i)
+            printf("%d\n", inp_array[i]);
+    }
 }
